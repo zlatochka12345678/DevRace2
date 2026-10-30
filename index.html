@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevRace: The College Run</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- ==================== РЕЖИМ 1: МОБИЛЬНОЕ ПРИЛОЖЕНИЕ ==================== -->
+    <div id="app-mode" class="phone-wrapper">
+        <div class="phone-screen">
+
+            <!-- ЭКРАН 1: АВТОРИЗАЦИЯ -->
+            <div id="screen-auth" class="screen active">
+                <div class="bg-image auth-bg"></div>
+                <div class="auth-content">
+                    <h1 class="logo">DevRace</h1>
+                    <h2 class="subtitle">С возвращением<br>в коллектив!</h2>
+                    <p class="desc">Войди, чтобы продолжить обучение, играть и расти вместе со своей командой.</p>
+                    <div class="input-group"><i class="fa-regular fa-envelope"></i><input type="email" placeholder="Электронная почта" value="example@domain.com"></div>
+                    <div class="input-group"><i class="fa-solid fa-lock"></i><input type="password" placeholder="Пароль" value="password123"></div>
+                    <div class="checkbox-group"><input type="checkbox" id="remember" checked><label for="remember">Запомнить меня</label></div>
+                    <button class="btn-primary" onclick="navigateTo('home')">Войти</button>
+                    <div class="divider"><span>Или войди через</span></div>
+                    <div class="social-btns"><button class="btn-social"><i class="fa-brands fa-vk"></i></button><button class="btn-social"><i class="fa-brands fa-google"></i></button></div>
+                    <div class="auth-stats"><div><span>03</span><br>проекта</div><div><span>05</span><br>команды</div><div><span>05</span><br>навыка</div></div>
+                    <p style="text-align:center; margin-top:20px; font-size:12px; color:#888;">Нет аккаунта? <a href="#" onclick="navigateTo('register')" style="color:#C6FF00;">Зарегистрироваться</a></p>
+                </div>
+            </div>
+
+            <!-- ЭКРАН 2: РЕГИСТРАЦИЯ -->
+            <div id="screen-register" class="screen">
+                <div class="content" style="padding-top:60px;">
+                    <h2 class="title">Заново начнем<br>на старте</h2>
+                    <p class="desc" style="margin-bottom:30px;">Создай аккаунт, чтобы присоединиться к гонке.</p>
+                    <div class="input-group"><i class="fa-regular fa-user"></i><input type="text" placeholder="Твой никнейм" value="Артур"></div>
+                    <div class="input-group"><i class="fa-regular fa-envelope"></i><input type="email" placeholder="Электронная почта" value="artur@devrace.ru"></div>
+                    <div class="input-group"><i class="fa-solid fa-lock"></i><input type="password" placeholder="Пароль" value="123456"></div>
+                    <button class="btn-primary" onclick="navigateTo('home')">Создать аккаунт</button>
+                    <p style="text-align:center; margin-top:20px; font-size:12px; color:#888;">Уже есть аккаунт? <a href="#" onclick="navigateTo('auth')" style="color:#C6FF00;">Войти</a></p>
+                </div>
+            </div>
+
+            <!-- ЭКРАН 3: ГЛАВНАЯ -->
+            <div id="screen-home" class="screen">
+                <header class="app-header">
+                    <div class="user-info"><img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar"><div><div class="username">Артур <span class="badge">2</span></div><div class="coins"><i class="fa-solid fa-coins"></i> 840</div></div></div>
+                    <i class="fa-regular fa-bell icon"></i>
+                </header>
+                <div class="content">
+                    <!-- НОВАЯ КНОПКА ДЛЯ ЗАПУСКА 2D-ИГРЫ -->
+                    <button class="btn-primary" style="margin-bottom: 20px; background: #C6FF00; color: #000; font-weight: bold;" onclick="startGameMode()">
+                        <i class="fa-solid fa-gamepad"></i> Начать прогулку по колледжу
+                    </button>
+
+                    <h3>Сегодня в коллективе</h3>
+                    <p class="status-text"><span class="dot"></span> Статус: Идёт активный день по плану подготовки!</p>
+                    <h3>Три квеста дня</h3>
+                    <div class="card" onclick="openQuest('gathering')">
+                        <div class="card-header"><h4>Точка сбора</h4><span class="time">09:00</span></div>
+                        <p>Коллектив соберется, чтобы обсудить цели и задачи.</p>
+                        <div class="participants"><img src="https://i.pravatar.cc/150?img=1" class="avatar-sm"><img src="https://i.pravatar.cc/150?img=2" class="avatar-sm"><span>+12 участников</span></div>
+                    </div>
+                    <div class="card active-quest">
+                        <div class="badge-active">Активно</div>
+                        <h4>Первый коммит</h4>
+                        <p>Твой первый шаг в команду.</p>
+                        <button class="btn-primary" onclick="event.stopPropagation(); openQuest('commit')">Перейти к заданию</button>
+                    </div>
+                    <div class="card" onclick="openQuest('watch')">
+                        <div class="card-header"><h4>Код-дозор</h4><span class="time">10:00 - 11:00</span></div>
+                        <p>Ты работаешь в команде, дебажишь код, фиксишь баги.</p>
+                        <button class="btn-secondary">Присоединиться</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ЭКРАН 4: ДЕТАЛИ КВЕСТА -->
+            <div id="screen-quest" class="screen">
+                <div class="content">
+                    <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
+                        <i class="fa-solid fa-arrow-left" style="color:white; cursor:pointer;" onclick="navigateTo('home')"></i>
+                        <h2 class="title" style="margin:0;" id="quest-title">Первый коммит</h2>
+                    </div>
+                    <div class="card" style="background:#1a2a1a; border-color:#C6FF00;">
+                        <h4 style="color:#C6FF00;">Статус: Активно</h4>
+                        <p id="quest-desc">Твой первый шаг в команду. Напиши свой первый код и отправь на проверку капитану.</p>
+                        <div class="progress-bar-container" style="margin-top:15px;"><div class="progress-bar" style="width: 40%;"></div></div>
+                    </div>
+                    <h3>Твои задачи</h3>
+                    <div class="card">
+                        <div class="task-item"><span>1. Изучить документацию</span><i class="fa-solid fa-check" style="color:#C6FF00;"></i></div>
+                        <div class="task-item"><span>2. Написать функцию</span><i class="fa-regular fa-circle"></i></div>
+                        <div class="task-item"><span>3. Отправить на ревью</span><i class="fa-regular fa-circle"></i></div>
+                    </div>
+                    <button class="btn-primary" onclick="completeQuest()">Отправить на проверку</button>
+                </div>
+            </div>
+
+            <!-- ЭКРАН 5: ПРОФИЛЬ -->
+            <div id="screen-profile" class="screen">
+                <div class="content">
+                    <h2 class="title">Твоя история. Твой след.</h2>
+                    <div class="profile-card">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar-lg">
+                        <div class="profile-info"><h3>Алекс Соколов</h3><span class="badge">2 уровень</span><span class="badge-rank">2-й в команде</span></div>
+                        <div class="progress-bar-container"><div class="progress-bar" style="width: 80%;"></div></div>
+                    </div>
+                    <h3>Прогресс по направлениям</h3>
+                    <div class="course-item"><div class="course-header"><span>Курс 01</span><span>100%</span></div><div class="progress-bar-container"><div class="progress-bar" style="width: 100%;"></div></div></div>
+                    <div class="course-item"><div class="course-header"><span>Курс 02</span><span>85%</span></div><div class="progress-bar-container"><div class="progress-bar" style="width: 85%;"></div></div></div>
+                    <div class="stats-grid">
+                        <div class="stat-box"><span>28</span>Задач</div>
+                        <div class="stat-box"><span>12</span>Проектов</div>
+                        <div class="stat-box"><span>11</span>Достижений</div>
+                        <div class="stat-box"><span>01</span>Пропущено</div>
+                    </div>
+                    <div class="card" style="margin-top:20px;" onclick="navigateTo('achievements')"><h4>Достижения <i class="fa-solid fa-chevron-right" style="float:right; font-size:14px;"></i></h4><p>Посмотреть все твои ачивки</p></div>
+                </div>
+            </div>
+
+            <!-- ЭКРАН 6: ДОСТИЖЕНИЯ -->
+            <div id="screen-achievements" class="screen">
+                <div class="content">
+                    <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
+                        <i class="fa-solid fa-arrow-left" style="color:white; cursor:pointer;" onclick="navigateTo('profile')"></i>
+                        <h2 class="title" style="margin:0;">Достижения</h2>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="card" style="text-align:center;"><i class="fa-solid fa-medal" style="font-size:30px; color:#C6FF00; margin-bottom:10px;"></i><h4>Первый шаг</h4><p style="font-size:12px;">Получено</p></div>
+                        <div class="card" style="text-align:center;"><i class="fa-solid fa-fire" style="font-size:30px; color:#ff5722; margin-bottom:10px;"></i><h4>Cool member</h4><p style="font-size:12px;">Получено</p></div>
+                        <div class="card" style="text-align:center; opacity:0.5;"><i class="fa-solid fa-lock" style="font-size:30px; color:#888; margin-bottom:10px;"></i><h4>Командный игрок</h4><p style="font-size:12px;">Заблокировано</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ЭКРАН 7: НАСТРОЙКИ -->
+            <div id="screen-settings" class="screen">
+                <div class="content">
+                    <h2 class="title">Настрой свой ритм</h2>
+                    <div class="settings-group">
+                        <h4>Игры и достижения</h4>
+                        <div class="setting-row"><span>Звук</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                        <div class="setting-row"><span>Музыка</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                    </div>
+                    <div class="settings-group">
+                        <h4>Внешний вид</h4>
+                        <div class="setting-row"><span>Тема</span><span class="text-muted">Темная <i class="fa-solid fa-chevron-right"></i></span></div>
+                        <div class="setting-row"><span>Язык</span><span class="text-muted">Русский <i class="fa-solid fa-chevron-right"></i></span></div>
+                    </div>
+                    <div class="settings-group">
+                        <h4>Аккаунт</h4>
+                        <div class="setting-row" onclick="navigateTo('account')" style="cursor:pointer;"><span>Мой аккаунт</span><i class="fa-solid fa-chevron-right text-muted"></i></div>
+                    </div>
+                    <button class="btn-primary" onclick="alert('Настройки сохранены!')">Сохранить настройки</button>
+                </div>
+            </div>
+
+            <!-- ЭКРАН 8: АККАУНТ -->
+            <div id="screen-account" class="screen">
+                <div class="content">
+                    <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
+                        <i class="fa-solid fa-arrow-left" style="color:white; cursor:pointer;" onclick="navigateTo('settings')"></i>
+                        <h2 class="title" style="margin:0;">Аккаунт</h2>
+                    </div>
+                    <div class="input-group"><i class="fa-regular fa-user"></i><input type="text" placeholder="Имя" value="Артур"></div>
+                    <div class="input-group"><i class="fa-regular fa-envelope"></i><input type="email" placeholder="Email" value="artur@devrace.ru"></div>
+                    <button class="btn-secondary" style="margin-bottom:15px;">Изменить пароль</button>
+                    <button class="btn-primary" style="background:#ff4444; color:white;" onclick="navigateTo('auth')">Выйти из аккаунта</button>
+                </div>
+            </div>
+
+            <!-- ЭКРАН 9: ПОМОЩЬ -->
+            <div id="screen-help" class="screen">
+                <div class="content">
+                    <h2 class="title">Помощь в меню</h2>
+                    <div class="card"><h4>Как начать квест?</h4><p>Перейди на главный экран и нажми на активную карточку задания.</p></div>
+                    <div class="card"><h4>Как получить достижение?</h4><p>Выполняй задачи и участвуй в жизни команды. Все успехи фиксируются автоматически.</p></div>
+                    <div class="card"><h4>Что такое "Код-дозор"?</h4><p>Это командное задание, где вы вместе ищете и исправляете ошибки в коде.</p></div>
+                </div>
+            </div>
+
+            <!-- НИЖНЕЕ МЕНЮ -->
+            <nav class="bottom-nav" id="bottom-nav" style="display:none;">
+                <div class="nav-item" onclick="navigateTo('home')" id="nav-home"><i class="fa-solid fa-house"></i></div>
+                <div class="nav-item" onclick="navigateTo('profile')" id="nav-profile"><i class="fa-solid fa-user"></i></div>
+                <div class="nav-item" onclick="navigateTo('achievements')" id="nav-achievements"><i class="fa-solid fa-trophy"></i></div>
+                <div class="nav-item" onclick="navigateTo('settings')" id="nav-settings"><i class="fa-solid fa-gear"></i></div>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- ==================== РЕЖИМ 2: 2D-ИГРА ==================== -->
+    <div id="game-mode" class="hidden">
+        <div id="game-container">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+            <!-- HUD игры -->
+            <div class="hud">
+                <div class="hud-item"><i class="fa-solid fa-user"></i> Артур (Lvl 2)</div>
+                <div class="hud-item"><i class="fa-solid fa-coins" style="color:#C6FF00;"></i> <span id="coin-count">840</span> RC</div>
+                <div class="hud-item"><i class="fa-solid fa-bolt" style="color:#C6FF00;"></i> <span id="xp-count">0</span> XP</div>
+                <button class="btn-exit-game" onclick="exitGameMode()"><i class="fa-solid fa-arrow-left"></i> В меню</button>
+            </div>
+
+            <div id="interaction-prompt" class="hidden">Нажмите <span class="key">E</span>, чтобы взаимодействовать</div>
+
+            <!-- Окно диалога -->
+            <div id="dialog-box" class="hidden">
+                <div class="dialog-header">
+                    <h3 id="dialog-title">Точка сбора</h3>
+                    <span class="close-btn" onclick="closeDialog()">×</span>
+                </div>
+                <div class="dialog-body">
+                    <p id="dialog-text">Коллектив соберется, чтобы обсудить цели и задачи.</p>
+                    <div id="quest-tasks" class="hidden">
+                        <div class="task"><i class="fa-solid fa-check" style="color:#C6FF00;"></i> 1. Изучить документацию</div>
+                        <div class="task"><i class="fa-regular fa-circle"></i> 2. Написать функцию</div>
+                        <div class="task"><i class="fa-regular fa-circle"></i> 3. Отправить на ревью</div>
+                    </div>
+                </div>
+                <button class="btn-primary" id="dialog-action-btn" onclick="handleQuestAction()">Перейти к заданию</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
